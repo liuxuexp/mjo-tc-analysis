@@ -1,0 +1,19 @@
+# NCEP/NCAR Reanalysis — daily means (surface + pressure levels)
+#
+# Source (NOAA Physical Sciences Laboratory, PSL):
+https://downloads.psl.noaa.gov/Datasets/ncep.reanalysis/Dailies/
+#
+# Cite: Kalnay, E., et al. (1996). The NCEP/NCAR 40-year reanalysis project.
+#   Bull. Amer. Meteor. Soc., 77(3), 437-471. https://doi.org/10.1175/1520-0477(1996)077<0437:TNYRP>2.0.CO;2
+#
+# Files expected in this directory (daily/), named {var}.{year}.nc:
+#   uwnd.{year}.nc   zonal wind         (pressure levels: 200, 500, 850 hPa)
+#   vwnd.{year}.nc   meridional wind    (pressure levels: 500, 850 hPa)
+#   hgt.{year}.nc    geopotential height (500 hPa)
+#   slp.{year}.nc    sea-level pressure
+#   for year = 1960..2024.
+#
+# Variables used by this study (see lib/dynamics.py):
+#   vort_850 = curl(u,v)@850 hPa; uwnd_850/vwnd_850 steering; hgt_500; uwnd_200; slp.
+#
+# License: public domain (U.S. government work, NOAA).

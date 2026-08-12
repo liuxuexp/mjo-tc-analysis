@@ -1,0 +1,37 @@
+{
+  "title": "Paper-4-1 major-revision reproducible analysis package",
+  "manuscript": "HYDROL-S-26-03282 (major revision)",
+  "period": "1960-2024",
+  "season_months": [
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "alpha": 0.1,
+  "data_sources": {
+    "CMA_Best_Track": "databank CMABSTdata (1949-2024), via src02/01_landfall.py",
+    "MJO_index": "ERA5-derived RMM1/RMM2/phase/amplitude, 1950-2024 (exact file archived)",
+    "precipitation": "CHM_PRE_V2 daily, 0.1 deg, 1960-2024 (databank/TPDC)",
+    "reanalysis": "NCEP/NCAR daily uwnd/vwnd/hgt/slp, 17 levels (NOAA PSL)",
+    "IBTrACS": "IBTrACS.ALL v04r01 (alternative best-track robustness)"
+  },
+  "variable_definitions": {
+    "tcp_total": "event-total TCP over China land cells, area-weighted, 10^6 m^3",
+    "tcp_depth": "area-weighted mean event depth over wet China cells, mm",
+    "affected_area": "wet China cell area (>0.5 mm), km^2",
+    "coastal/inland": "split at 200 km from coastline (china_country.shp)",
+    "NDAYS_group": "active-MJO days (amplitude>=1) in season with phase in group",
+    "rate_per_1000_phase_days": "storm count / NDAYS_group * 1000",
+    "ratio_no_modulation": "rate / (total events / total active days); 1.0 = null",
+    "vort_850": "850-hPa relative vorticity = dv/dx - du/dy, s^-1",
+    "z_anomaly": "(X - Xbar_month)/sigma_month, calendar-month climatology 1960-2024"
+  },
+  "significance": "two-sided alpha=0.10; phase tests use residence-time permutation null; field composites use one-sample t=composite*sqrt(n), |t|>1.645",
+  "environment": {
+    "python": "3.12.12",
+    "pandas": "3.0.5",
+    "platform": "Linux-5.14.0-611.13.1.el9_7.x86_64-x86_64-with-glibc2.34"
+  }
+}

@@ -1,0 +1,6 @@
+October decision (P2-1)
+  Jun-Sep : n=233, mean event TCP=23690 (90% CI 21614-25770)
+  October : n=25, mean event TCP=15946 (90% CI 11900-19941)
+  Oct-vs-JJAS mean: -32.7% (90% CI -50.4 to -13.5%)
+  Robust October increase (CI > 0): False
+  Recommendation: KEEP in SI only — remove October from the main Fig 9 composite (already done) and present October circulation in SI (Fig S8) only, unless the above shows a robust per-event increase.

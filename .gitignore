@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+
+# Heavy / regenerable outputs — NOT committed (regenerate via run_all.py)
+data/pre/*.nc
+data/data03/composite_*.nc
+fig/*.png
+fig/*.pdf
+
+# Large external datasets — fetch per each directory's download-url.txt / README.
+# Keep the directory README + download-url.txt; ignore the data files themselves.
+data/CHM_PRE_V2/daily/*.nc
+data/Data-NCAR/daily/*.nc
+data/IBTrACS/*.nc
+data/CMABSTdata/*.txt
+
+# Optional doc-builder artefacts (make_fig_doc_pdf.py writes here by default)
+投稿/
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/
