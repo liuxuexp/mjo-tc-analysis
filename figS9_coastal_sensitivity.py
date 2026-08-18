@@ -16,6 +16,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import matplotlib.ticker as mticker
 
 import config as C
 from lib import tcp as tcp_lib
@@ -83,6 +84,13 @@ def main():
         ax.set_xticks(x)
         ax.set_xticklabels([C.CATEGORY_LABEL[c] for c in C.CATEGORY_ORDER], fontsize=P.HOUSE_FS)
         ax.tick_params(axis='y', labelsize=P.HOUSE_FS)
+        ax.tick_params(axis='both', length=3)
+        fmt = mticker.ScalarFormatter(useMathText=True)
+        fmt.set_scientific(True)
+        fmt.set_powerlimits((0, 0))
+        ax.yaxis.set_major_formatter(fmt)
+        ax.yaxis.set_major_locator(mticker.MultipleLocator(5000))
+        ax.yaxis.get_offset_text().set_fontsize(P.HOUSE_FS)
         if k == 0:
             ax.set_ylabel('Mean event TCP (10$^6$ m$^3$)', fontsize=P.HOUSE_FS)
             ax.legend(fontsize=P.HOUSE_FS, loc='upper left', frameon=False)

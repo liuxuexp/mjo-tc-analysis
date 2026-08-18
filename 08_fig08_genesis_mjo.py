@@ -32,11 +32,17 @@ import config as C
 from lib import mjo as mj
 from lib import plot_style as P
 
+TITLE_FS = 22
+
 # Genesis-region display names shown on the figure (config keys -> figure labels).
-_ORIG_GENESIS = {'South China Sea': 'South China Sea',
+_ORIG_GENESIS = {'South China Sea': 'SCS',
                  'Western Tropical WNP': 'South WNP',
                  'Eastern Tropical WNP': 'Open WNP',
                  'North WNP': 'North WNP'}
+_LEGEND_GENESIS = {'South China Sea': 'South China Sea',
+                   'Western Tropical WNP': 'South WNP',
+                   'Eastern Tropical WNP': 'Open WNP',
+                   'North WNP': 'North WNP'}
 
 
 def _genesis_all_wnp():
@@ -108,7 +114,7 @@ def panel_ab(ax, sub, title, top, ylabel=True):
     ax.set_ylim(0, top * 1.10)
     if ylabel:
         ax.set_ylabel('Landfalls reaching region (%)', fontsize=P.HOUSE_FS)
-    ax.set_title(title, fontsize=P.HOUSE_FS, fontweight='bold', loc='left')
+    ax.set_title(title, fontsize=TITLE_FS, fontweight='bold', loc='left')
     ax.legend(fontsize=P.HOUSE_FS, loc='upper right', frameon=False)
 
 
@@ -146,7 +152,7 @@ def panel_cd(ax, d, title, ymax, ylabel=True):
         res = mj.residence_permutation_test(counts, ND)
         vv = [res[g]['rate'] for g in C.GROUP_KEY]
         ax.bar(x + (i - (len(C.GENESIS_ORDER) - 1) / 2) * off, vv, bw, color=cols[i], edgecolor='black',
-               lw=0.4, label=_ORIG_GENESIS[gr])
+               lw=0.4, label=_LEGEND_GENESIS[gr])
         for j, g in enumerate(C.GROUP_KEY):
             xc = x[j] + (i - (len(C.GENESIS_ORDER) - 1) / 2) * off
             ax.text(xc, vv[j], f"{counts[g]}", ha='center', va='bottom',
@@ -165,7 +171,7 @@ def panel_cd(ax, d, title, ymax, ylabel=True):
     ax.tick_params(axis='y', labelsize=P.HOUSE_FS)
     if ylabel:
         ax.set_ylabel('Storms / 1000 phase-days', fontsize=P.HOUSE_FS)
-    ax.set_title(title, fontsize=P.HOUSE_FS, fontweight='bold', loc='left')
+    ax.set_title(title, fontsize=TITLE_FS, fontweight='bold', loc='left')
     ax.legend(fontsize=P.HOUSE_FS, ncol=1, loc='upper left', frameon=False)
 
 
@@ -182,7 +188,7 @@ def main():
     ymax_cd = max(_cd_rate_max(allwnp), _cd_rate_max(landfall), 1.0)
 
     fig, axs = plt.subplots(2, 2, figsize=(18, 12), sharey='row',
-                            gridspec_kw=dict(hspace=0.25, wspace=0.02))
+                            gridspec_kw=dict(hspace=0.15, wspace=0.02))
     panel_ab(axs[0, 0], weak, '(a) Weak TCs', top=top_ab)
     panel_ab(axs[0, 1], modmaj, '(b) Moderate + Super TCs', top=top_ab, ylabel=False)
     panel_cd(axs[1, 0], allwnp, '(c) All WNP TCs', ymax=ymax_cd)
@@ -191,6 +197,7 @@ def main():
     # sharey='row': drop the redundant right-column y tick labels.
     for ax in (axs[0, 1], axs[1, 1]):
         ax.tick_params(labelleft=False)
+    fig.align_ylabels(axs[:, 0])
     P.save(fig, 'fig8-genesis_mjo.png')
 
 

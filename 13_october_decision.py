@@ -42,7 +42,7 @@ def main():
     ax.set_xlim(-0.15, 0.45)   # ticks land at 1/4 and 3/4 -> equal end margins
     ax.tick_params(axis='y', labelsize=P.HOUSE_FS)
     ax.set_ylabel('Mean event TCP (10$^6$ m$^3$)', fontsize=P.HOUSE_FS)
-    ax.set_title('(a) Mean event-total TCP per storm', fontsize=P.HOUSE_FS, fontweight='bold')
+    ax.set_title('(a) Mean event-total TCP per storm', fontsize=P.HOUSE_FS, fontweight='bold', loc='left', x=-0.35)
     # (b) distributions
     ax = axs[1]
     data = [jj['tcp_total'].values, oct_['tcp_total'].values]
@@ -57,7 +57,7 @@ def main():
     ax.tick_params(axis='x', labelsize=P.HOUSE_FS)
     ax.tick_params(axis='y', labelsize=P.HOUSE_FS)
     ax.set_ylabel('Event-total TCP (10$^6$ m$^3$)', fontsize=P.HOUSE_FS)
-    ax.set_title('(b) Storm-level distributions', fontsize=P.HOUSE_FS, fontweight='bold')
+    ax.set_title('(b) Storm-level distributions', fontsize=P.HOUSE_FS, fontweight='bold', loc='left', x=-0.25)
     fig.subplots_adjust(wspace=0.35)
     P.save(fig, 'figS10-october_tcp.png')
 

@@ -29,6 +29,8 @@ from lib import tcp as tcp_lib
 from lib import bootstrap as bs
 from lib import plot_style as P
 
+TITLE_FS = 22
+
 
 def _map_ax(fig, rect, title, gleft=True, gbottom=True,
             extent=(100, 135.5, 17.5, 50)):
@@ -63,7 +65,7 @@ def _map_ax(fig, rect, title, gleft=True, gbottom=True,
     # cartopy 0.25 gridliner (draw_labels=True) suppresses set_title on GeoAxes
     # under mpl 3.11 — draw the title as a plain text artist instead
     # y 1.005 (was 1.02): hug the map top — titles brought closer
-    ax.text(0.0, 1.005, title, transform=ax.transAxes, fontsize=P.HOUSE_FS,
+    ax.text(0.0, 1.005, title, transform=ax.transAxes, fontsize=TITLE_FS,
             fontweight='bold', ha='left', va='bottom')
     return ax
 
@@ -113,9 +115,9 @@ def main():
     _lo, _hi = axa.get_ylim(); axa.set_ylim(_lo, max_wtop * 2.2)
     axa.set_xticks(x)
     axa.tick_params(axis='y', labelsize=P.HOUSE_FS)
-    axa.set_ylabel('Event-total TCP per storm (10$^6$ m$^3$)', fontsize=15)
+    axa.set_ylabel('Event-total TCP per storm (10$^6$ m$^3$)', fontsize=18)
     axa.set_title('(a) Storm-level event TCP by LMI × phase',
-                  fontsize=P.HOUSE_FS, fontweight='bold', loc='left')
+                  fontsize=TITLE_FS, fontweight='bold', loc='left', x=-0.07)
     handles = [plt.Rectangle((0, 0), 1, 1, color=C.COLOR_MAP[C.CATEGORY_LABEL[c]])
                for c in C.CATEGORY_ORDER]   # solid (no alpha)
     axa.legend(handles, [C.CATEGORY_FULL[c] for c in C.CATEGORY_ORDER],
@@ -141,9 +143,9 @@ def main():
     axb.set_xticks(x)
     axb.set_xticklabels([C.group_to_label(g) for g in C.GROUP_KEY], fontsize=P.HOUSE_FS)
     axb.tick_params(axis='both', labelsize=P.HOUSE_FS)
-    axb.set_ylabel('Mean precip area (10$^3$ km$^2$)', fontsize=15)
+    axb.set_ylabel('Mean precip area (10$^3$ km$^2$)', fontsize=18)
     axb.set_title('(b) Precipitation area per storm',
-                  fontsize=P.HOUSE_FS, fontweight='bold', loc='left')
+                  fontsize=TITLE_FS, fontweight='bold', loc='left', x=-0.07)
     axb.set_ylim(0, max(all_means) * 1.22)   # headroom for value labels
     # shared x-axis: phase labels on (b) only, hide on (a)
     axa.tick_params(labelbottom=False)

@@ -20,6 +20,7 @@ import config as C
 from lib import mjo as mj
 from lib import plot_style as P
 
+TITLE_FS = 22
 
 def load_ibtracs_wp():
     """Return list of dicts: sid, genesis_time, lat0, lon0, max_wind (kt)."""
@@ -104,7 +105,7 @@ def main():
     ax.set_ylabel('Matched storms', fontsize=P.HOUSE_FS, labelpad=-3)
     ax.tick_params(axis='both', labelsize=P.HOUSE_FS)
     ax.set_title('(a) CMA–IBTrACS genesis match',
-                 fontsize=P.HOUSE_FS, fontweight='bold')
+                 fontsize=TITLE_FS, fontweight='bold', loc='left', x=-0.2)
     # match rate as an in-axes annotation; smaller than axis text and dropped
     # below the title edge; median legend matches its size
     ax.text(0.98, 0.90, f'{len(m)}/{len(df)} storms ({100*len(m)/len(df):.0f}%)',
@@ -119,7 +120,7 @@ def main():
     corr = np.corrcoef(m['cma_lmi'], m['ib_wind_ms'])[0, 1]
     ax.set_xlabel('CMA LMI (m/s)', fontsize=P.HOUSE_FS); ax.set_ylabel('IBTrACS max wind (m/s)', fontsize=P.HOUSE_FS, labelpad=-3)
     ax.tick_params(axis='both', labelsize=P.HOUSE_FS)
-    ax.set_title('(b) Intensity agreement', fontsize=P.HOUSE_FS, fontweight='bold')
+    ax.set_title('(b) Intensity agreement', fontsize=TITLE_FS, fontweight='bold', loc='left')
     # correlation coefficient in upper-left of the scatter (points hug the 1:1
     # diagonal, leaving the high-IBTrACS/low-CMA corner empty)
     ax.text(0.04, 0.95, f'r = {corr:.2f}', transform=ax.transAxes, ha='left', va='top',
@@ -143,7 +144,7 @@ def main():
     ax.set_xticks(x); ax.set_xticklabels([C.group_to_label(g).replace(' ', '\n') for g in C.GROUP_KEY], fontsize=P.HOUSE_FS)
     ax.tick_params(axis='both', labelsize=P.HOUSE_FS)
     ax.set_ylabel('Super-TC share of landfalls (%)', fontsize=P.HOUSE_FS, labelpad=-3)
-    ax.set_title('(c) Super-TC landfall share', fontsize=P.HOUSE_FS, fontweight='bold')
+    ax.set_title('(c) Super-TC landfall share', fontsize=TITLE_FS, fontweight='bold', loc='left')
     ax.legend(fontsize=P.HOUSE_FS, frameon=False, loc='upper right',
               bbox_to_anchor=(1, 1.02))
     plt.tight_layout(w_pad=0.5)

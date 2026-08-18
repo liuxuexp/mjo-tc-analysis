@@ -162,7 +162,7 @@ shared bottom colorbar; fixed lon/lat ticks; RdBu_r +/-0.8; white a=0.10
 stipple. No suptitle -- the descriptive title is the filename."""
     ds = xr.open_dataset(C.data_path("composite_jjas.nc"))
     fig = plt.figure(figsize=(10, 9.0))
-    outer = gridspec.GridSpec(2, 1, figure=fig, hspace=0.12, top=0.94, bottom=0.15)   # cd↔ef block gap
+    outer = gridspec.GridSpec(2, 1, figure=fig, hspace=0.275, top=0.94, bottom=0.15)   # cd↔ef block gap
     parts = [
         ('uwnd_200', '200-hPa zonal wind'),
         ('slp',      'Mean sea-level pressure'),
@@ -175,18 +175,18 @@ stipple. No suptitle -- the descriptive title is the filename."""
     for i, (base, header) in enumerate(parts):
         # each part mirrors fig9's drawing: a 2x2 of phase groups, header above
         inner = gridspec.GridSpecFromSubplotSpec(2, 2, subplot_spec=outer[i],
-                                                 wspace=0.10, hspace=0.08)
+                                                 wspace=0.10, hspace=0.22)
         for r in range(2):
             for c in range(2):
                 g = C.GROUP_KEY[r * 2 + c]            # 1-2, 3-4 / 5-6, 7-8
                 lc = chr(ord('a') + letter); letter += 1
                 ax = _ax(fig, inner[r, c], f"({lc}) {C.group_to_label(g)}",
-                         gleft=(c == 0), gbottom=(i == 1 and r == 1),
+                         gleft=(c == 0), gbottom=(r == 1),
                          xticks=xticks, yticks=yticks)
                 last_mesh, _ = _panel(ax, ds, base, g, vector=False,
                                       levels=levels, cmap=cmap)
         pos = outer[i].get_position(fig)
-        fig.text(pos.x0 + pos.width / 2, pos.y1 + 0.015, header,
+        fig.text(pos.x0 + pos.width / 2, pos.y1 + 0.03, header,
                  ha='center', va='bottom', fontsize=P.HOUSE_FS, fontweight='bold')
     # ONE shared bottom colorbar -- both parts are standardised anomalies on
     # the same +/-0.8 scale, so a single bar suffices.
@@ -208,7 +208,7 @@ stipple; wind vectors where significant. No suptitle -- the descriptive title
 is the filename."""
     ds = xr.open_dataset(C.data_path(f"composite_{name}.nc"))
     fig = plt.figure(figsize=(10, 9.0))
-    outer = gridspec.GridSpec(2, 1, figure=fig, hspace=0.12, top=0.94, bottom=0.15)   # cd↔ef block gap
+    outer = gridspec.GridSpec(2, 1, figure=fig, hspace=0.275, top=0.94, bottom=0.15)   # cd↔ef block gap
     parts = [
         ('vort_850', 'uwnd_850', 'vwnd_850', '850-hPa relative vorticity + horizontal wind'),
         ('hgt_500', 'uwnd_500', 'vwnd_500', '500-hPa geopotential height + steering wind'),
@@ -220,17 +220,17 @@ is the filename."""
     letter = 0
     for i, (base, ub, vb, header) in enumerate(parts):
         inner = gridspec.GridSpecFromSubplotSpec(2, 2, subplot_spec=outer[i],
-                                                 wspace=0.10, hspace=0.08)
+                                                 wspace=0.10, hspace=0.22)
         for r in range(2):
             for c in range(2):
                 g = C.GROUP_KEY[r * 2 + c]            # 1-2, 3-4 / 5-6, 7-8
                 lc = chr(ord('a') + letter); letter += 1
                 ax = _ax(fig, inner[r, c], f"({lc}) {C.group_to_label(g)}",
-                         gleft=(c == 0), gbottom=(i == 1 and r == 1),
+                         gleft=(c == 0), gbottom=(r == 1),
                          xticks=xticks, yticks=yticks)
                 last_mesh, _ = _panel(ax, ds, base, g, ub, vb, levels=levels, cmap=cmap)
         pos = outer[i].get_position(fig)
-        fig.text(pos.x0 + pos.width / 2, pos.y1 + 0.015, header,
+        fig.text(pos.x0 + pos.width / 2, pos.y1 + 0.03, header,
                  ha='center', va='bottom', fontsize=P.HOUSE_FS, fontweight='bold')
     cax = fig.add_axes([0.2, 0.095, 0.6, 0.022])
     cb = fig.colorbar(last_mesh, cax=cax, orientation='horizontal', extend='both')

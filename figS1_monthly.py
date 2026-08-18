@@ -30,10 +30,11 @@ def main():
     for i, m in enumerate(months):
         tot = int(((df['month'] == m)).sum())
         if tot:
-            ax.text(i, bottom[i] + 1, str(tot), ha='center', fontsize=P.BARVAL_FS)
+            ax.text(i, bottom[i] + 1, str(tot), ha='center', fontsize=18)
     ax.set_xticks(x); ax.set_xticklabels(
         ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'])
     ax.tick_params(axis='both', labelsize=P.HOUSE_FS)
+    ax.set_ylim(0, 150)
     ax.set_ylabel('Number of China-landfalling TCs', fontsize=P.HOUSE_FS)
     ax.legend(fontsize=P.HOUSE_FS, frameon=False)
     P.save(fig, 'figS1-monthly.png')

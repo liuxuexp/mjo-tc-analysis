@@ -27,6 +27,7 @@ from lib import bootstrap as bs
 from lib import plot_style as P
 
 ND = mj.active_days_per_group(months=C.SEASON_MONTHS)
+TITLE_FS = 22
 
 
 # ---------------------------------------------------------------------------
@@ -110,7 +111,7 @@ def panel_ace(ax, rng):
     ax.set_ylim(0, 2.0); ax.set_ylabel('ACE / no-modulation', fontsize=P.HOUSE_FS)
     ax.yaxis.set_major_locator(MultipleLocator(0.5))
     ax.yaxis.set_major_formatter(FormatStrFormatter('%.1f'))
-    ax.set_title('(a) Phase-normalized ACE', fontsize=P.HOUSE_FS, fontweight='bold')
+    ax.set_title('(a) Phase-normalized ACE', fontsize=TITLE_FS, fontweight='bold')
     ax.legend(fontsize=P.HOUSE_FS, loc='upper left', frameon=False)
     print("ACE ratio all-WNP:", {g: round(ra[g]['ratio'], 2) for g in C.GROUP_KEY})
     print("ACE ratio landfall:", {g: round(rl[g]['ratio'], 2) for g in C.GROUP_KEY})
@@ -152,7 +153,7 @@ def panel_landfall_by_lmi(ax, df):
     ax.set_ylim(0, 2.0); ax.set_ylabel('Landfalls / no-modulation', fontsize=P.HOUSE_FS)
     ax.yaxis.set_major_locator(MultipleLocator(0.5))
     ax.yaxis.set_major_formatter(FormatStrFormatter('%.1f'))
-    ax.set_title('(b) Landfall count by LMI', fontsize=P.HOUSE_FS, fontweight='bold')
+    ax.set_title('(b) Landfall count by LMI', fontsize=TITLE_FS, fontweight='bold')
     ax.legend(fontsize=P.HOUSE_FS, loc='upper left', frameon=False, labelspacing=0.12)
 
 
@@ -169,7 +170,7 @@ def panel_total_tcp(ax, df):
     ax.set_xticks(x); ax.set_xticklabels([C.group_to_label(g) for g in C.GROUP_KEY], fontsize=P.HOUSE_FS)
     ax.tick_params(axis='y', labelsize=P.HOUSE_FS)
     ax.set_ylabel('Total TCP (10$^6$ m$^3$)', fontsize=P.HOUSE_FS)
-    ax.set_title('(c) Total TCP over China', fontsize=P.HOUSE_FS, fontweight='bold')
+    ax.set_title('(c) Total TCP over China', fontsize=TITLE_FS, fontweight='bold')
     ax.legend(fontsize=P.HOUSE_FS, loc='upper left', frameon=False)
     ax.set_ylim(0, max(tot.values()) * 1.25)
     ax.yaxis.get_offset_text().set_fontsize(P.HOUSE_FS)
@@ -194,7 +195,7 @@ def panel_mean_tcp(ax, df, rng):
     ax.set_xticks(x); ax.set_xticklabels([C.group_to_label(g) for g in C.GROUP_KEY], fontsize=P.HOUSE_FS)
     ax.tick_params(axis='y', labelsize=P.HOUSE_FS)
     ax.set_ylabel('Mean event TCP (10$^6$ m$^3$)', fontsize=P.HOUSE_FS)
-    ax.set_title('(d) Mean event TCP per storm', fontsize=P.HOUSE_FS, fontweight='bold')
+    ax.set_title('(d) Mean event TCP per storm', fontsize=TITLE_FS, fontweight='bold')
     ax.legend(fontsize=P.HOUSE_FS, loc='upper left', frameon=False)
     ax.set_ylim(0, max(means.values()) * 1.35)
     ax.ticklabel_format(axis='y', style='sci', scilimits=(0, 0))
@@ -207,7 +208,7 @@ def main():
     df = df[df['in_jjaso'] & df['active_landfall']].reset_index(drop=True)
 
     fig, axes = plt.subplots(2, 2, figsize=(18, 12), sharex=True,
-                             gridspec_kw=dict(hspace=0.09, wspace=0.15))
+                             gridspec_kw=dict(hspace=0.11, wspace=0.15))
     ax_a, ax_b = axes[0]
     ax_c, ax_d = axes[1]
     panel_ace(ax_a, rng)

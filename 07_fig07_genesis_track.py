@@ -122,7 +122,7 @@ def main():
     handles.append(plt.Line2D([0], [0], marker='X', color='w', markerfacecolor='gold',
                               markeredgecolor='black', markersize=11, label='mean genesis'))
     fig.legend(handles=handles, loc='lower center', ncol=len(handles), fontsize=16,
-               frameon=False, bbox_to_anchor=(0.5, 0.005),
+               frameon=False, bbox_to_anchor=(0.47, 0.005),
                handlelength=1.0, handletextpad=0.4, columnspacing=1.2)
     plt.subplots_adjust(top=0.96, bottom=0.07, hspace=0.12)
     # cartopy 0.25 + matplotlib 3.11: bbox_inches='tight' drops the GeoAxes from the

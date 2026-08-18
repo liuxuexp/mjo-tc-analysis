@@ -21,6 +21,8 @@ import config as C
 from lib import bootstrap as bs
 from lib import plot_style as P
 
+TITLE_FS = 22
+
 
 def main():
     df = pd.read_csv(C.data_path("event_table.csv"))
@@ -49,7 +51,7 @@ def main():
     ax.set_xticks(range(4))
     ax.set_xticklabels([f'{lab[c]}\nat landfall' for c in [0, 1, 2, 3]], fontsize=TICK_FS)
     ax.set_yticks(range(3))
-    ax.set_yticklabels([lab[c] for c in [1, 2, 3]], fontsize=TICK_FS,
+    ax.set_yticklabels([lab[c] for c in [1, 2, 3]], fontsize=18,
                        rotation=90, va='center')
     ax.tick_params(axis='both', labelsize=TICK_FS)
     # red outline on the no-change cells: landfall == LMI, i.e. col j == row i + 1
@@ -58,9 +60,9 @@ def main():
     for i in range(3):
         ax.add_patch(plt.Rectangle((i + 1 - 0.5, i - 0.5), 1, 1, fill=False, edgecolor='red', lw=2))
     cb = plt.colorbar(im, ax=ax, shrink=0.8, pad=0.02)   # colorbar tight to the plot
-    cb.set_label('n storms', fontsize=P.BARVAL_FS, labelpad=-5)   # vertical label, tight to the colorbar
+    cb.set_label('n storms', fontsize=P.BARVAL_FS, labelpad=-10)   # vertical label, tight to the colorbar
     cb.ax.tick_params(labelsize=P.BARVAL_FS, pad=0)   # numbers hug the colorbar
-    ax.set_title('(a) LMI × intensity at landfall', fontsize=P.HOUSE_FS, fontweight='bold')
+    ax.set_title('(a) LMI × intensity at landfall', fontsize=TITLE_FS, fontweight='bold')
     ax.legend(handles=[Patch(fc='none', ec='red', lw=2, label='no change')],
               loc='upper right', frameon=False, fontsize=P.BARVAL_FS)
 
@@ -83,8 +85,8 @@ def main():
                label=region, error_kw=dict(alpha=0.8, elinewidth=1))
     ax.set_xticks(x); ax.set_xticklabels([f'{lab[c]}\nat landfall' for c in [1, 2, 3]], fontsize=TICK_FS)
     ax.tick_params(axis='y', labelsize=TICK_FS)
-    ax.set_ylabel('Landfalls in region (%)', fontsize=P.HOUSE_FS, labelpad=-2)
-    ax.set_title('(b) Regional landfall proportion', fontsize=P.HOUSE_FS, fontweight='bold')
+    ax.set_ylabel('Landfalls in region (%)', fontsize=P.HOUSE_FS, labelpad=-7)
+    ax.set_title('(b) Regional landfall proportion', fontsize=TITLE_FS, fontweight='bold')
     ax.legend(fontsize=TICK_FS, frameon=False, loc='upper left'); ax.set_ylim(0, 100)
 
     # (c) event TCP by landfall-intensity
@@ -105,9 +107,9 @@ def main():
         ax.errorbar(i + 1, m['median'],
                     yerr=[[max(0, m['median'] - m['ci_lo'])], [m['ci_hi'] - m['median']]],
                     fmt='D', color='black', ms=6, capsize=3, zorder=5)
-    ax.set_yscale('log'); ax.set_ylabel('Event-total TCP (10$^6$ m$^3$)', fontsize=P.HOUSE_FS)
+    ax.set_yscale('log'); ax.set_ylabel('Event-total TCP (10$^6$ m$^3$)', fontsize=P.HOUSE_FS, labelpad=-3)
     ax.tick_params(axis='both', labelsize=TICK_FS)
-    ax.set_title('(c) Event-total TCP', fontsize=P.HOUSE_FS, fontweight='bold')
+    ax.set_title('(c) Event-total TCP', fontsize=TITLE_FS, fontweight='bold')
 
     plt.tight_layout(w_pad=0.1)   # reduce horizontal gap between subplots
     # Close ONLY the (a)-(b) gap: shift panels b and c left together so the

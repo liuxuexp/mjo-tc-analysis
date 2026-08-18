@@ -105,7 +105,7 @@ def main():
     # hspace 0.07: tight inter-row vertical gap. figH 11.5 keeps the bottom
     # legend close to the last map row after crop. Title (axes-frac 1.01) and
     # legend (y=0.0) are preserved.
-    plt.subplots_adjust(hspace=0.07, wspace=0.06, top=0.965, bottom=0.07)
+    plt.subplots_adjust(hspace=0.09, wspace=0.06, top=0.965, bottom=0.07)
     out = C.fig_path('fig2-landfall_location.png')
     # cartopy 0.25 + mpl 3.11: bbox_inches='tight' drops the GeoAxes from the
     # tight bbox -> figure collapses to a strip. Save the full figure instead;

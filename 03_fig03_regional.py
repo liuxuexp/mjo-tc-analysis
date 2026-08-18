@@ -26,6 +26,7 @@ REGION_COLORS = {'South China': '#2E7D32', 'East China': '#1976D2',
                  'North China': '#7B1FA2'}
 YLIM_LO, YLIM_HI = 0.0, 3.0      # ratio frame; ticks every 0.5, 1 decimal
 LEGEND_FS = 22          # legend text (larger than axis HOUSE_FS=18)
+TITLE_FS = 22
 NDAYS = mj.active_days_per_group(months=C.SEASON_MONTHS)
 
 
@@ -68,8 +69,8 @@ def regional_panel(ax, df, title, is_bottom):
         ax.tick_params(axis='x', labelbottom=True)
     else:
         ax.tick_params(axis='x', labelbottom=False)
-    ax.tick_params(axis='y', labelsize=P.HOUSE_FS)
-    ax.set_title(title, fontsize=P.HOUSE_FS, fontweight='bold')
+    ax.tick_params(axis='y', labelsize=20)
+    ax.set_title(title, fontsize=TITLE_FS, fontweight='bold')
     ax.set_ylim(YLIM_LO, YLIM_HI)
     ax.set_yticks(np.arange(YLIM_LO, YLIM_HI + 0.001, 0.5))
 
@@ -92,9 +93,9 @@ def main():
     axs[0, 0].legend(handles, labels, loc='upper left', ncol=1,
                      fontsize=LEGEND_FS, frameon=False)
     fig.supylabel('Landfalls / active day  (ratio to no-modulation)',
-                  fontsize=P.HOUSE_FS)
+                 fontsize=22)
     fig.tight_layout()
-    fig.subplots_adjust(hspace=0.08)
+    fig.subplots_adjust(hspace=0.10)
     tot = {r: int((df['landfall_region'] == r).sum()) for r in C.REGION_ORDER}
     print("NDAYS:", NDAYS)
     print("regional landfall totals:", tot)

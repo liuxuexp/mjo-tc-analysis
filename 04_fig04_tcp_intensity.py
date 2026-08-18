@@ -29,7 +29,8 @@ from lib import tcp as tcp_lib
 from lib import bootstrap as bs
 from lib import plot_style as P
 
-MAP_FS = 16   # map panel (a-f) axis-tick font, sized for the narrow map columns
+MAP_FS = 18   # map panel (a-f) axis-tick font, sized for the narrow map columns
+TITLE_FS = 22
 
 
 def _map_ax(fig, gs_rect, title, gleft=True, gbottom=True,
@@ -52,7 +53,7 @@ def _map_ax(fig, gs_rect, title, gleft=True, gbottom=True,
     gl.xlabel_style = {'size': MAP_FS}; gl.ylabel_style = {'size': MAP_FS}
     # cartopy 0.25 gridliner (draw_labels=True) suppresses set_title on GeoAxes
     # under mpl 3.11 — draw the title as a plain text artist instead
-    ax.text(0.0, 1.02, title, transform=ax.transAxes, fontsize=P.HOUSE_FS,
+    ax.text(0.0, 1.005, title, transform=ax.transAxes, fontsize=TITLE_FS,
             fontweight='bold', ha='left', va='bottom')
     return ax
 
@@ -102,8 +103,8 @@ def main():
         mesh_tot = _fill(ax, fields_total[cat], lat, lon, vmax_tot)
     cax_tot = fig.add_subplot(gsA[3])
     cb_tot = fig.colorbar(mesh_tot, cax=cax_tot, orientation='horizontal', extend='max')
-    cb_tot.set_label('Total TCP (mm)', fontsize=14)
-    cb_tot.ax.tick_params(labelsize=14)
+    cb_tot.set_label('Total TCP (mm)', fontsize=18)
+    cb_tot.ax.tick_params(labelsize=16)
 
     # Column B -- (d-f) mean TCP/storm, shared axes (no lat labels, lon on f)
     for i, cat in enumerate(C.CATEGORY_ORDER):
@@ -113,8 +114,8 @@ def main():
         mesh_mean = _fill(ax, fields_mean[cat], lat, lon, vmax_mean)
     cax_mean = fig.add_subplot(gsB[3])
     cb_mean = fig.colorbar(mesh_mean, cax=cax_mean, orientation='horizontal', extend='max')
-    cb_mean.set_label('Mean TCP/storm (mm)', fontsize=14)
-    cb_mean.ax.tick_params(labelsize=14)
+    cb_mean.set_label('Mean TCP/storm (mm)', fontsize=18)
+    cb_mean.ax.tick_params(labelsize=16)
 
     # Column C -- (g) storm-level distributions
     axg = fig.add_subplot(gsC[0])
@@ -134,9 +135,9 @@ def main():
         m = bs.summarize_median(v)
         axg.errorbar(i + 1, m['median'], yerr=[[m['median'] - m['ci_lo']], [m['ci_hi'] - m['median']]],
                      fmt='D', color='black', ms=7, capsize=4, zorder=5)
-    axg.set_yscale('log'); axg.set_ylabel('Event-total TCP (10$^6$ m$^3$)', fontsize=P.HOUSE_FS)
-    axg.tick_params(axis='both', labelsize=P.HOUSE_FS)
-    axg.set_title('(g) Storm-level event TCP', fontsize=P.HOUSE_FS, fontweight='bold', loc='left')
+    axg.set_yscale('log'); axg.set_ylabel('Event-total TCP (10$^6$ m$^3$)', fontsize=22)
+    axg.tick_params(axis='both', labelsize=20)
+    axg.set_title('(g) Storm-level event TCP', fontsize=TITLE_FS, fontweight='bold', loc='left')
 
     # Column C -- (h) coastal vs inland
     axh = fig.add_subplot(gsC[1])
@@ -145,8 +146,8 @@ def main():
     inland_m = [bs.summarize(df[df['lmi_category']==c]['inland_total'])['mean'] for c in C.CATEGORY_ORDER]
     axh.bar(x - w/2, coast_m, w, color='#2E7D32', edgecolor='black', lw=0.5, label='Coastal (≤200 km)')
     axh.bar(x + w/2, inland_m, w, color='#EF6C00', edgecolor='black', lw=0.5, label='Inland (>200 km)')
-    axh.set_xticks(x); axh.set_xticklabels([C.CATEGORY_LABEL[c] for c in C.CATEGORY_ORDER], fontsize=P.HOUSE_FS)
-    axh.tick_params(axis='both', labelsize=P.HOUSE_FS, length=3)
+    axh.set_xticks(x); axh.set_xticklabels([C.CATEGORY_LABEL[c] for c in C.CATEGORY_ORDER], fontsize=20)
+    axh.tick_params(axis='both', labelsize=20, length=3)
     # y-axis in scientific notation: ScalarFormatter prints mantissa ticks
     # with ×10^4 as the standard matplotlib axis offset. Max mean ~1.8e4
     exp = int(np.floor(np.log10(max(max(coast_m), max(inland_m)))))
@@ -157,10 +158,10 @@ def main():
     fmt.set_scientific(True)
     fmt.set_powerlimits((0, 0))           # force sci -> ×10^n as the standard offset
     axh.yaxis.set_major_formatter(fmt)
-    axh.yaxis.get_offset_text().set_fontsize(P.HOUSE_FS)
-    axh.set_ylabel('Mean event TCP (10$^6$ m$^3$)', fontsize=P.HOUSE_FS)
-    axh.set_title('(h) Coastal vs inland', fontsize=P.HOUSE_FS, fontweight='bold', loc='left')
-    axh.legend(fontsize=16, frameon=False, loc='upper left')
+    axh.yaxis.get_offset_text().set_fontsize(20)
+    axh.set_ylabel('Mean event TCP (10$^6$ m$^3$)', fontsize=22)
+    axh.set_title('(h) Coastal vs inland', fontsize=TITLE_FS, fontweight='bold', loc='left')
+    axh.legend(fontsize=18, frameon=False, loc='upper left')
 
     # cartopy 0.25 + mpl 3.11: bbox_inches='tight' drops GeoAxes -> figure collapses
     plt.rcParams['savefig.bbox'] = 'standard'

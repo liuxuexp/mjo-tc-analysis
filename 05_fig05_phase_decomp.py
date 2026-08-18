@@ -34,6 +34,8 @@ from lib import mjo as mj
 from lib import bootstrap as bs
 from lib import plot_style as P
 
+TITLE_FS = 22
+
 
 # ---------------------------------------------------------------------------
 # Panels
@@ -59,16 +61,16 @@ def panel_frequency(ax, res):
         ax.text(x[i], top + 0.04, f"{res[g]['n']}", ha='center', va='bottom',
                 fontsize=P.HOUSE_FS)
         if res[g]['stars']:
-            ax.text(x[i], top + 0.22, res[g]['stars'], ha='center', va='bottom',
-                    fontsize=P.STAR_FS, fontweight='bold')
+            ax.text(x[i], top + 0.17, res[g]['stars'], ha='center', va='bottom',
+                    fontsize=20, fontweight='bold')
     ax.set_xticks(x)
     ax.set_xticklabels([C.group_to_label(g) for g in C.GROUP_KEY], fontsize=P.HOUSE_FS)
     ax.tick_params(axis='y', labelsize=P.HOUSE_FS)
-    ax.set_ylim(0, 2.0)
+    ax.set_ylim(0, 1.9)
     ax.yaxis.set_major_locator(MultipleLocator(0.5))
     ax.yaxis.set_major_formatter(FormatStrFormatter('%.1f'))
     ax.set_ylabel('Landfalls / no-modulation', fontsize=P.HOUSE_FS)
-    ax.set_title('(a) Phase-normalized landfall frequency', fontsize=P.HOUSE_FS, fontweight='bold')
+    ax.set_title('(a) Phase-normalized landfall frequency', fontsize=TITLE_FS, fontweight='bold')
 
 
 def panel_total_tcp(ax, tot, counts):
@@ -85,14 +87,14 @@ def panel_total_tcp(ax, tot, counts):
     ax.set_xticklabels([C.group_to_label(g) for g in C.GROUP_KEY], fontsize=P.HOUSE_FS)
     ax.tick_params(axis='y', labelsize=P.HOUSE_FS)
     ax.set_ylabel('Total TCP (10$^6$ m$^3$)', fontsize=P.HOUSE_FS)
-    ax.set_title('(b) Total TCP over China', fontsize=P.HOUSE_FS, fontweight='bold')
-    ax.legend(fontsize=P.HOUSE_FS, loc='upper left', frameon=False)
+    ax.set_title('(b) Total TCP over China', fontsize=TITLE_FS, fontweight='bold')
+    ax.legend(fontsize=20, loc='upper left', frameon=False)
     ax.set_ylim(0, max(tot.values()) * 1.25)
     ax.yaxis.get_offset_text().set_fontsize(P.HOUSE_FS)
 
 
 def _per_storm_panel(ax, summ, key, overall, title, ylabel, legend_label,
-                     ylim=None):
+                     ylim=None, freeze_title_y=False):
     """Shared (c)/(d) per-storm TCP bar plot with 90% bootstrap CI.
 
     `key` is 'mean' (bs.summarize) or 'median' (bs.summarize_median); both dicts
@@ -120,8 +122,11 @@ def _per_storm_panel(ax, summ, key, overall, title, ylabel, legend_label,
     ax.set_xticklabels([C.group_to_label(g) for g in C.GROUP_KEY], fontsize=P.HOUSE_FS)
     ax.tick_params(axis='y', labelsize=P.HOUSE_FS)
     ax.set_ylabel(ylabel, fontsize=P.HOUSE_FS)
-    ax.set_title(title, fontsize=P.HOUSE_FS, fontweight='bold')
-    ax.legend(fontsize=P.HOUSE_FS, loc='upper left', frameon=False)
+    ax.set_title(title, fontsize=TITLE_FS, fontweight='bold')
+    if freeze_title_y:
+        ax._autotitlepos = False
+        ax.title.set_position((0.53, 1.0))
+    ax.legend(fontsize=20, loc='upper left', frameon=False)
     ax.set_ylim(0, ylim[1] if ylim is not None else max(vv) * 1.35)
     ax.ticklabel_format(axis='y', style='sci', scilimits=(0, 0))
     ax.yaxis.get_offset_text().set_fontsize(P.HOUSE_FS)
@@ -146,7 +151,7 @@ def panel_median_tcp(ax, med_s, overall_med):
     _per_storm_panel(ax, med_s, 'median', overall_med,
                      '(d) Median event TCP per storm',
                      'Median event TCP (10$^6$ m$^3$)', 'overall median',
-                     ylim=(0, 3e4))   # clean 0-3 (x10^4) range
+                     ylim=(0, 3e4), freeze_title_y=True)
 
 
 def main():
@@ -171,7 +176,7 @@ def main():
     overall_med = bs.summarize_median(df['tcp_total'].values)['median']
 
     fig, axes = plt.subplots(2, 2, figsize=(18, 12), sharex=True,
-                             gridspec_kw=dict(hspace=0.09, wspace=0.15))
+                             gridspec_kw=dict(hspace=0.11, wspace=0.15))
     ax_a, ax_b = axes[0]
     ax_c, ax_d = axes[1]
     panel_frequency(ax_a, res)
