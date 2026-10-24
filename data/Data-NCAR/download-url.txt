@@ -1,0 +1,15 @@
+# NCEP/NCAR Reanalysis - daily means
+#
+# Source (NOAA Physical Sciences Laboratory, PSL):
+https://downloads.psl.noaa.gov/Datasets/ncep.reanalysis/Dailies/
+#
+# Cite: Kalnay, E., et al. (1996). The NCEP/NCAR 40-year reanalysis project.
+#   Bull. Amer. Meteor. Soc., 77(3), 437-471.
+#
+# Files expected in daily/, named {var}.{year}.nc:
+#   uwnd.{year}.nc   zonal wind, 850 hPa
+#   vwnd.{year}.nc   meridional wind, 850 hPa
+#   slp.{year}.nc    sea-level pressure
+#   for year = 1960..2024.
+#
+# License: public domain (U.S. government work, NOAA).

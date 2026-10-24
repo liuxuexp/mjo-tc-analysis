@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+
+# Regenerable outputs
+fig/*.png
+fig/*.pdf
+data/data03/composite_*.nc
+data/pre/*.nc
+logs/
+reports/
+
+# External gridded datasets (fetch per each directory's README / download-url.txt)
+data/CHM_PRE_V2/daily/*.nc
+data/Data-NCAR/daily/*.nc
+data/IBTrACS/*.nc
+data/CMABSTdata/*.txt
+
+# OS / editor files
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/

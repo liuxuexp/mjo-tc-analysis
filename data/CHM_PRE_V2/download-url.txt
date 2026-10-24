@@ -1,0 +1,14 @@
+# CHM_PRE_V2 — China Merged Precipitation Analysis (V2.0), daily, 0.1 deg
+#
+# Source (National Tibetan Plateau Data Center, TPDC):
+https://data.tpdc.ac.cn/zh-hans/data/e5c335d9-cbb9-48a6-ba35-d67dd614bb8c
+#
+# Cite: Shen, Y., Zhao, P., Pan, Y., & Yu, J. (2014). A high spatiotemporal
+#   gauge-satellite merged precipitation analysis over China. J. Geophys. Res.
+#   Atmos., 119(6), 3063-3075. https://doi.org/10.1002/2013JD020686
+#
+# Files expected in this directory (daily/):
+#   CHM_PRE_V2_daily_{year}.nc   for year = 1960..2024   (~675 MB/year)
+#   Variable: precip (mm/day); grid: 0.1 deg, 18.05-53.95 N, 72.05-135.95 E.
+#
+# License: CC-BY-NC 4.0 (TPDC) — verify terms at the URL above before redistribution.
