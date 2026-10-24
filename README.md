@@ -70,7 +70,7 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
-Python 3.12 was used for the published results. Cartopy needs its own coastline
+Python 3.10 was used for the published results. Cartopy needs its own coastline
 data on first use; the maps in this repository draw the committed shapefiles.
 
 ## Run
