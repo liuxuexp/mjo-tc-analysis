@@ -117,8 +117,8 @@ both procedures, and `tests_stats_yb.py` checks their invariants.
   genesis-day MJO phase; landfall-based statistics use the landfall-day phase.
 - The circulation composites use NCEP/NCAR Reanalysis 1 at 2.5 deg. ERA5 was
   not used because a complete local record was unavailable.
-- The IBTrACS robustness check matches about 47% of CMA landfalling storms; the
-  unmatched cases are mainly weak or short-lived South China Sea systems.
+- The IBTrACS robustness check matches 219 of the 490 CMA landfalling storms
+  (44.7%); the unmatched cases are mainly weak or short-lived systems.
 - MJO phases are grouped as 1-2, 3-4, 5-6 and 7-8, with amplitude >= 1 defining
   active days.
 
